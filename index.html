@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        body {
+            background-color: #e6e6e6;
+            font-family: Arial;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        table {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            width: fit-content;
+            border-radius: 10%;
+            padding: 30px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+        }
+
+        input {
+            padding: 6px;
+            border: 1px solid gray;
+            border-radius: 4px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: darkblue;
+            transform: translateY(2px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: blue;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        }
+    </style>
+    <div>
+
+        <table>
+            <h1>Registration Form</h1>
+            <form>
+                <tr>
+                    <td>Name: </td>
+                    <td><input type="text" id="name" onkeyup="checknow()" placeholder="Please enter ur Name">
+                        <div class="error hidden" style=" color: red;font-size: small;font-weight: lighter;">Please
+                            enter the username</div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td><input type="text" onkeyup="emailvalidation();checknow()" id="email"
+                            placeholder="Please enter ur Email">
+                        <div class="erroremail hidden" style=" color: red;font-size: small;font-weight: lighter;">Enter
+                            valid Email</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td><input type="text" onkeyup="passwordvalidation();checknow()" id="password"
+                            placeholder="Please enter ur Password">
+                        <div class="errorpassword hidden" style=" color: red;font-size: small;font-weight: lighter;">
+                            Enter a
+                            valid Password</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><button type="button" disabled class="btn"
+                            onclick="savedata()">Submit</button></td>
+                </tr>
+            </form>
+        </table>
+
+</body>
+
+</html>
+
+<script>
+    function checknow() {
+        var password = document.getElementById("password").value
+        var email = document.getElementById("email").value
+        var name = document.getElementById("name").value
+        var btn = document.querySelector(".btn")
+
+
+
+        if (name != "" && email != "" && password != "") {
+            btn.disabled = false
+        }
+        else {
+            btn.disabled = true
+        }
+
+    }
+    function passwordvalidation() {
+        var password = document.getElementById("password").value
+        var errorpassword = document.querySelector(".errorpassword")
+        var uppercnt = 0
+        var numcnt = 0
+        for (var i = 0; i < password.length; i++) {
+            ch = password[i]
+            if (ch >= "0" && ch <= "9") {
+                numcnt++
+            }
+            if (ch >= "A" && ch <= "Z") {
+                uppercnt++
+            }
+        }
+        if (password.length < 6 || numcnt == 0 || uppercnt == 0) {
+            errorpassword.classList.remove("hidden")
+        }
+        else {
+            errorpassword.classList.add("hidden")
+        }
+    }
+    function emailvalidation() {
+        var email = document.getElementById("email").value
+        var erroremail = document.querySelector(".erroremail")
+        var atsymbol = 0
+        var dot = 0
+
+        for (var i = 0; i < email.length; i++) {
+            if (email[i] == "@") {
+                atsymbol++
+            }
+            if (email[i] == ".") {
+                dot++
+            }
+
+        }
+        if (atsymbol != 1 || dot != 1 || email[email.length - 1] == ".") {
+            erroremail.classList.remove("hidden")   // show error
+        }
+        else {
+            erroremail.classList.add("hidden")      // hide error
+        }
+    }
+
+    function savedata() {
+        var name = document.getElementById("name")
+        var errorpassword = document.querySelector(".errorpassword")
+        var erroremail = document.querySelector(".erroremail")
+        var error = document.querySelector(".error")
+        var btn = document.querySelector(".btn")
+        if (name.value === "") {
+            error.classList.remove("hidden")
+        }
+        else {
+            error.classList.add("hidden")
+        }
+        if (erroremail.classList.contains("hidden") &&
+            errorpassword.classList.contains("hidden")) {
+            location.reload()   // refresh page when no errors
+        }
+
+
+
+    }
+</script>
